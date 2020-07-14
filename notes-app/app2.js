@@ -5,4 +5,4 @@ var chalk1 = require('chalk');
 //import vali2 from 'validator';
 
 //console.log(vali.isEmail('ww.s.add@cc.com'));
-console.log(chalk1.red.bgRed.bold(vali.isEmail('ww.s.add@cc.com')));
+console.log(chalk1.red.bold.inverse.bgBlue(vali.isEmail('ww.s.add@cc.com')));
