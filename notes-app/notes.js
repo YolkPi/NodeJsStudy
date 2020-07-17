@@ -1,4 +1,6 @@
+const chalk = require('chalk');
 const fs = require('fs');
+const { array } = require('yargs');
 
 const getNotes = function () {
     return 'your notes';
@@ -17,7 +19,7 @@ const addNote = function (title, body) {
     });
 
     if(duplicateArray.length !== 0){
-        console.log('title duplicated');
+        console.log(chalk.red.bold.bgCyan('title duplicated'));
         return;
     }
 
@@ -29,9 +31,32 @@ const addNote = function (title, body) {
 
     saveNotes(notes);
 
-    console.log('a new note added')
+    console.log(chalk.bold.bgGreen('a new note added'));
     console.log('*title: ' + title);
     console.log('*body:' + body);
+}
+
+const removeNotes = function (title) {
+    const notes = loadNotes();
+
+    var found = false;
+
+    for(var i = 0; i < notes.length; i++){
+        if(notes[i].title === title){
+            notes.splice(i, 1);
+            //fix the coordinate after delete(splice)
+            i--;
+            found = true;
+        }
+    }
+
+    if(found){
+        saveNotes(notes);
+        console.log(chalk.red.bold.bgCyan('delete successful'));
+    }
+    else{
+        console.log(chalk.red.bold.bgCyan('note with title: "' + title + '" is not found'));
+    }
 }
 
 const saveNotes = function (notes) {
@@ -55,5 +80,6 @@ const loadNotes = function () {
 
 module.exports = {
     getNotes: getNotes,
-    addNote: addNote
+    addNote: addNote,
+    removeNotes: removeNotes
 }
