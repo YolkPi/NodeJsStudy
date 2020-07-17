@@ -1,10 +1,31 @@
 //get model
-const myFs = require('fs');
+const fs = require('fs');
+const yargs = require('yargs');
+const notes = require('./notes.js');
+const chalk = require('chalk');
 
-myFs.appendFileSync('notes.txt', '\nßAdAAThis file was created');
+yargs.command({
+    command: 'add',
+    describe: 'add a new note',
+    builder: {
+        title: {
+            describe: 'notes.title',
+            demandOption: true,
+            type: 'string'
+        },
+        body: {
+            describe: 'notes.body',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function () {
+        // console.log('a new note added')
+        // console.log('*title: ' + yargs.argv.title);
+        // console.log('*body:' + yargs.argv.body);
 
-const myFs2 = require('./util.js')
+        notes.addNote(yargs.argv.title, yargs.argv.body);
+    }
+});
 
-var res = myFs2('sdsad');
-
-console.log(res);
+yargs.parse();
