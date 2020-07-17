@@ -38,8 +38,32 @@ yargs.command({
             tpye: 'string'
         }
     },
-    handler: function () {
+    handler () {
         notes.removeNotes(yargs.argv.title);
+    }
+});
+
+const list = {
+    command: 'list',
+    describe: 'list all notes',
+    handler: function(){
+        notes.listAllNotes();
+    }
+}
+yargs.command(list);
+
+yargs.command({
+    command: 'read',
+    describe: 'read a note with corresponding title',
+    builder: {
+        title: {
+            describe: 'title of the note',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler () {
+        notes.readNote(yargs.argv.title);
     }
 });
 
