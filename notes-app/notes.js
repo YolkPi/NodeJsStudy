@@ -48,8 +48,11 @@ const readNote = function (title) {
         (note) => title === note.title
     )
 
+    //use for debug
+    //debugger
+
     if(!note){
-        console.log(chalk.bold.redBright('note did not find'));
+        console.log(chalk.bold.redBright('note not find'));
     }
     else{
         console.log(chalk.bold('title: ') + note.title
