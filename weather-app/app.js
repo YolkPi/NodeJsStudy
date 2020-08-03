@@ -53,6 +53,6 @@ const getweather = function(coordinate){
     })();
 }
 
-geoCode('Asan, Korea', getweather);
+geoCode(process.argv[2], getweather);
 
 
