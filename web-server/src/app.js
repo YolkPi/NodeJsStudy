@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
+const geocode = require('./weatherUtils');
 
 const app = express();
 
@@ -57,6 +58,24 @@ app.get('', (req, res) => {
     });
 })
 
+app.get('/weather', (req, res) => {
+    if(!req.query.address) {
+        return res.send({
+            error: 'address is required'
+        });
+    }
+
+    geocode.geoCode(req.query.address, (coordinate) => {
+        geocode.getweather(coordinate, (result) => {
+            res.send({
+                temperature : result.temperature,
+                description : result.description,
+                location: req.query.address
+            });
+        })
+    });
+});
+
 app.get('/help', (req, res) => {
     res.render('help', {
         title: 'my title',
@@ -66,7 +85,14 @@ app.get('/help', (req, res) => {
     });
 })
 
+app.get('/help/*', (req, res) => {
+    res.send('Sorry, article not found');
+})
+
 //customize my 404 page
+//nodejs will find a page from top to buttom.
+//means that if we move it above /help, the request /help will be 
+//responsed by this function
 app.get('*', (req, res) => {
     res.send('Sorry, there is a 404 problem');
 });
