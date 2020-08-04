@@ -47,7 +47,8 @@ const getweather = function(coordinate, callback){
             
             result = {
                 temperature: responseBodyObject.current.temperature,
-                description: responseBodyObject.current.weather_descriptions
+                description: responseBodyObject.current.weather_descriptions,
+                icon: responseBodyObject.current.weather_icons[0]
             }
 
             console.log(result);

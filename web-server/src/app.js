@@ -54,7 +54,7 @@ app.use(express.static(publicDirectory));
 app.get('', (req, res) => {
     res.render('index', {
         title: 'my title',
-        name: 'Chandler'
+        name: 'Jiachen'
     });
 })
 
@@ -70,7 +70,8 @@ app.get('/weather', (req, res) => {
             res.send({
                 temperature : result.temperature,
                 description : result.description,
-                location: req.query.address
+                location: req.query.address,
+                icon: result.icon
             });
         })
     });
@@ -81,7 +82,7 @@ app.get('/help', (req, res) => {
         title: 'my title',
         weather_description: 'Cloud',
         temperature: 16,
-        name: 'Chandler'
+        name: 'Jiachen'
     });
 })
 
