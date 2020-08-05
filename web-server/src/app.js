@@ -2,8 +2,12 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 const geocode = require('./weatherUtils');
+const { env } = require('process');
 
 const app = express();
+
+//GET the port number that setted by heroku
+const port = process.env.PORT || 8080;
 
 //setup view engine
 app.set('view engine', 'hbs');
@@ -99,6 +103,6 @@ app.get('*', (req, res) => {
 });
 
 //start the server up
-app.listen(8080, () => {
-    console.log('port 8080 starting')
+app.listen(port, () => {
+    console.log('port ' + port + ' starting')
 });
