@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const { update } = require('../models/user');
 const router = new express.Router();
 
 //automatically parsing incoming json to an object
@@ -53,9 +54,15 @@ router.patch('/users/:id', async (req, res) => {
     const updates = Object.keys(req.body);
 
     try {
-        //{new: true} means that we want updated user be returned but not the old one
-        const user = await User.findByIdAndUpdate(req.params.id
-            , req.body, {new: true, runValidators: true});
+        const user = await User.findById(req.params.id);
+
+        updates.forEach((update) => user[update] = req.body[update]);
+
+        await user.save();
+
+        // //{new: true} means that we want updated user be returned but not the old one
+        // const user = await User.findByIdAndUpdate(req.params.id
+        //     , req.body, {new: true, runValidators: true});
 
         if(!user){
             return res.status(404).send();
